@@ -1,0 +1,12 @@
+Package: MATH4753PROJ1
+Type: Package
+Title: Intro Package
+Version: 0.1.0
+Author: Michael Hogsett
+Maintainer: dmike23 <michael.hogsett-1@ou.edu>
+Description: Test package
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
