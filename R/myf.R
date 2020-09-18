@@ -1,14 +1,16 @@
 #' Square Function
 #'
-#'Takes a vector and returns a vector of squared components
+#'this function works by placing the output in the object quad.lm by making it a function of x
+
 #'
 #' @param x
 #'
-#' @return a vector of squared components in the form
+#' @return output in the object quad.lm.
 #' @export
 #'
-#' @examples
-#' x=1:30; myf(x)
-myf=function(x){
-  x^2
+#'
+
+
+quadfun=function(x){
+  quad.lm$coef[1] +quad.lm$coef[2]*x  + quad.lm$coef[3]*x^2 # this function works by placing the output in the object quad.lm by making it a function of x
 }
