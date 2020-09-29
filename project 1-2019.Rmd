@@ -1,0 +1,300 @@
+---
+title: "Project 1"
+author: "Michael Hogsett"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: show
+    csl: biomed-central.csl
+    df_print: paged
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    toc: yes
+    toc_depth: 4
+#bibliography: project.bib
+abstract: This project is all about analysing the SWDEFECTS file using R and probability theory.
+---
+
+<center>
+
+![Dr. Wayne Stewart](mike.jpg "My Picture"){ width=20% }
+
+</center>
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction to the data
+
+## Data and variables(see MS pg. 77,125)
+Describe the data and the problem we wish to investigate.
+
+We will be assessing different methods of detecting defects in software code written for NASA spacecraft instruments.
+The data contains 498 modules of software code written in "C" language. The software code was evaluated,
+for defects and classified as "true" (i.e., module has defective
+code) or "false" (i.e., module has correct code). The SWDEFECTS file contains a variable that corresponds to each method. When the method predicts a defect, the corresponding variable's value is "yes". Otherwise, it is "no".
+
+
+## Summary Table 
+
+Create the summary table (TABLE SIA3.2) found on page 125.
+
+```{r}
+getwd()
+library(data.table)
+library(dplyr)
+library(formattable)
+library(tidyr)
+customGreen0 = "#DeF7E9"
+customGreen = "#71CA97"
+customRed = "#ff7f7f"
+
+table32= fread('Table #1.csv', data.table=FALSE, header = TRUE, stringsAsFactors = FALSE)
+
+head(table32)
+attach(table32)
+
+#1)  First Data Table
+
+formattable(table32, 
+            align =c("l","c","c","c","c", "c", "c", "c", "r"), 
+            list(`Indicator Name` = formatter(
+              "span", style = ~ style(color = "grey",font.weight = "bold")) 
+))
+```
+
+
+Using $\LaTeX$ construct the formulae for 
+
+1. Accuracy
+2. Detection rate
+3. False alarm rate
+4. Precision
+
+
+$$
+\begin{eqnarray}
+P(Algorithm && is & correct) & = \frac {a+d} {a+b+c+d}
+\end{eqnarray}
+$$
+$$
+\begin{eqnarray}
+P(predict && defect & | & module & has & defect) & = \frac {d} {b+d}
+\end{eqnarray}
+$$
+$$
+\begin{eqnarray}
+P(predict && defect & | & module & has & no & defect) & = \frac {c} {a+c}
+\end{eqnarray}
+$$
+$$
+\begin{eqnarray}
+P(module && has & defect & | & predict & defect) & = \frac {d} {c+d}
+\end{eqnarray}
+$$
+
+# R functions
+Using the above definitions make R functions that will create the required probabilities, please remove `eval=FALSE` when creating the functions :
+
+```{r accuracy}
+acc=function(a,b,c,d)
+{
+  isCorrect <- ((a+d)/(a+b+c+d))
+  return(isCorrect)
+  
+}
+
+
+```
+
+```{r detecton}
+detect=function(b,d)
+{
+  hasDefect <- (d/(b+d))
+  return(hasDefect)
+}
+
+```
+
+```{r alarm}
+falarm=function(a,c)
+{
+  noDefect <- (c/(a+c))
+  return(noDefect)
+}
+
+```
+
+```{r precision}
+prec1=function(c,d)
+{
+  modDefect <- (d/(c+d))
+  return(modDefect)
+}
+```
+
+
+# Create the tables in Figure SIA3.1
+
+The tables do not have to be formatted exactly as those in the book. Have the functions produce a suitable barplot also. 
+
+As a guide and help -- see code below
+
+```{r }
+swd=read.csv("swdefects.csv")
+head(swd)
+tab=with(swd, table(predict.loc.50,defect))
+barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict Loc Defect Crosstabulation", xlab="Defect", col=7:8)
+tab2=addmargins(tab)
+tab2
+```
+
+
+```{r}
+swd=read.csv("swdefects.csv")
+head(swd)
+tab=with(swd, table(predict.vg.10,defect))
+barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict VG*Defect Crosstabulation", xlab="Defect", col=7:8)
+tab4=addmargins(tab)
+tab4
+```
+
+
+```{r}
+swd=read.csv("swdefects.csv")
+head(swd)
+tab=with(swd, table(predict.evg.14.5,defect))
+
+barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict EVG*Defect Crosstabulation", xlab="Defect", col=7:8)
+
+tab5=addmargins(tab)
+tab5
+```
+
+```{r}
+swd=read.csv("swdefects.csv")
+head(swd)
+tab=with(swd, table(predict.ivg.9.2,defect))
+
+barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict IVG*Defect Crosstabulation", xlab="Defect", col=7:8)
+
+tab6=addmargins(tab)
+tab6
+```
+
+
+
+
+# Create the corrected table on page 127 (there are mistakes in it), TABLE SIA3.3
+
+Using the functions you have made, create the corrected table (SIA3.3) in an R chunk.
+ 
+You can call this table `tab3`
+
+Now create a function `mybar()`that will have as its input variables
+
+>
+    1. tab ( this will be a n by m table) - like `tab3`
+    2. acc ( accuracy of the decimal output ) -- like `acc=4` for example
+    
+
+    
+The function will need to create two things
+
+>
+    1. A barplot of the table
+    2. Commandline output in the form of a list containing the table
+
+```{r}
+accacc<-c(acc(400,29,49,20),acc(397,35,52,14),acc(441,47,8,2),acc(422,38,27,11))
+accuracy <- round(accacc,4)
+```
+
+
+```{r}
+detdet<-c(detect(29,20), detect(35,14) ,detect(47,2) ,detect(38,11))
+
+detection.rate <- round(detdet,4)
+```
+
+```{r}
+ffal<-c(
+
+falarm(400,49),#loc far
+falarm(397,52),
+falarm(441,8),
+falarm(422,27))
+
+false.alarm.rate <- round(ffal,4)
+```
+
+
+
+```{r}
+pprc <- c(
+
+prec1(49,20),
+prec1(52,14),
+prec1(8,2),
+prec1(27,11))
+
+precision <- round(pprc,4)
+
+```
+
+
+```{r}
+
+
+methodrow <- c("Lines of Code", "Cyclomatic complexity", "Essential complexity", "Design Complexity" )
+row15 <- cbind(accuracy, detection.rate, false.alarm.rate, precision)
+
+```
+
+
+
+```{r}
+correct25=read.csv("correct1.csv")
+
+```
+
+
+  
+  
+```{r}
+
+
+tab<- row15
+tab3 <- correct25 
+tab3
+mybar=function(tab,acc)
+  
+{
+barplot(tab, beside = TRUE, legend.text = methodrow, col=1:4)
+  list(prjct1=tab3)
+  
+}
+
+```
+    
+    
+![](my bar plot.jpg){ width=70% }
+
