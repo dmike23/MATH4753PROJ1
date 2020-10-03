@@ -1,6 +1,6 @@
 ---
 title: "Project 1"
-author: "Dr. Wayne Stewart"
+author: "Michael Hogsett"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -26,7 +26,7 @@ output:
     toc: yes
     toc_depth: 4
 #bibliography: project.bib
-abstract: This project is all about analysing the SWDEFECTS file using R and probability theory. You will need to change the headings to reflect the nature of the project intentions. Re write this abstract as the last thing you do.
+abstract: This project is all about analysing the SWDEFECTS file using R and probability theory.
 ---
 
 <center>
@@ -89,15 +89,7 @@ Using $\LaTeX$ construct the formulae for
 3. False alarm rate
 4. Precision
 
-Latex Example: See (http://www.stat.cmu.edu/~cshalizi/rmarkdown/#elements-of-math-mode)
 
-$$
-\begin{eqnarray}
-P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\
-& \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\
-& \leq & \frac{\mathrm{Var}[X]}{k^2}
-\end{eqnarray}
-$$
 $$
 \begin{eqnarray}
 P(Algorithm && is & correct) & = \frac {a+d} {a+b+c+d}
@@ -174,6 +166,8 @@ barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict Loc Defect Cros
 tab2=addmargins(tab)
 tab2
 ```
+
+
 ```{r}
 swd=read.csv("swdefects.csv")
 head(swd)
@@ -182,6 +176,8 @@ barplot(tab, beside=TRUE, leg=TRUE,ylab = "Count", main="Predict VG*Defect Cross
 tab4=addmargins(tab)
 tab4
 ```
+
+
 ```{r}
 swd=read.csv("swdefects.csv")
 head(swd)
@@ -269,15 +265,15 @@ precision <- round(pprc,4)
 
 
 methodrow <- c("Lines of Code", "Cyclomatic complexity", "Essential complexity", "Design Complexity" )
-methodrow
 row15 <- cbind(accuracy, detection.rate, false.alarm.rate, precision)
-table(row15)
-
 
 ```
+
+
+
 ```{r}
 correct25=read.csv("correct1.csv")
-correct25
+
 ```
 
 
