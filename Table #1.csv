@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 ﻿,,Module Has Defects,
 ,,FALSE,TRUE
 algorithm,no,a,b
 predicts,yes,c,d
 defects,,,
+=======
+﻿,,Module Has Defects,
+,,FALSE,TRUE
+algorithm,no,a,b
+predicts,yes,c,d
+defects,,,
+>>>>>>> fb63bf305171169a42f085b81037596ffaad6288

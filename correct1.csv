@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 ﻿method,accuracy,detection rate,false alarm rate,precision
 lines of code,0.8434,0.4082,0.1091,0.2899
 cyclomatic complexity,0.8253,0.2857,0.1158,0.2121
 essential complexity,0.8896,0.0408,0.0178,0.2
 design complexity,0.8694,0.2245,0.0601,0.2895
+=======
+﻿method,accuracy,detection rate,false alarm rate,precision
+lines of code,0.8434,0.4082,0.1091,0.2899
+cyclomatic complexity,0.8253,0.2857,0.1158,0.2121
+essential complexity,0.8896,0.0408,0.0178,0.2
+design complexity,0.8694,0.2245,0.0601,0.2895
+>>>>>>> fb63bf305171169a42f085b81037596ffaad6288
