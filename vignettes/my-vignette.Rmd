@@ -1,0 +1,54 @@
+---
+title: "package-of-functions-vignette"
+author: "Michael Hogsett"
+date: 11/17/2020
+
+output: rmarkdown::html_vignette
+
+vignette: >
+  %\VignetteIndexEntry{package-of-functions-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MATH4753PROJ1)
+```
+
+
+# lab5func function
+
+: This returns the probability distribution for a negative binomial random variable Y
+
+: It takes parameters y,r, and p.
+
+: The functions choose and lchoose return binomial coefficients and the logarithms of their absolute values. Note that choose(n, k) is defined for all real numbers n and integer k. For k ??? 1 it is defined as n(n-1).(n-k+1) / k!, as 1 for k = 0 and as 0 for negative k. Non-integer values of k are rounded to an integer, with a warning. 
+choose(*, k) uses direct arithmetic (instead of [l]gamma calls) for small k, for speed and accuracy reasons.
+
+
+# myboot2 function
+
+: Takes a sample and using a confidence interval, makes a histogram with a point estimate plotted 1/2 way up the density using parameters iter, x, fun, alpha, and cx.
+
+# myci function
+
+: Creates a 95% confidence interval for the mean from a single sample x
+: You must create the sample yourself. ex: x <- c(1,2,3,4,6,7,9)
+: The function uses the mean, standard deviation and lenght to calculate the confidence interval.
+
+# mycltb function
+
+: 'Takes parameters n, iter, p and creates a histogram in the form of density plot. n is the size, p is the probability, iter is the iterations
+
+:will work with discrete or continuous distributions
+
+: returns a histogram
+
